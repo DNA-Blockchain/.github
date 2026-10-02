@@ -9,7 +9,7 @@ OS kernel, a Linux image and a fine-tuned language model are developed in the sa
 | | |
 |---|---|
 | Main repository | [**Helloworld**](https://github.com/DNA-Blockchain/Helloworld) |
-| Version | 0.9.0 ([changelog](https://github.com/DNA-Blockchain/Helloworld/blob/master/CHANGELOG.md)) |
+| Version | 0.10.1 ([changelog](https://github.com/DNA-Blockchain/Helloworld/blob/master/CHANGELOG.md)) |
 | License | [UPL-1.0](https://github.com/DNA-Blockchain/Helloworld/blob/master/LICENSE) |
 | Author | Chase Allen Ringquist ([NOTICE.md](https://github.com/DNA-Blockchain/Helloworld/blob/master/NOTICE.md)) |
 | Privacy | [PRIVACY.md](https://github.com/DNA-Blockchain/Helloworld/blob/master/PRIVACY.md) |
@@ -24,7 +24,10 @@ OS kernel, a Linux image and a fine-tuned language model are developed in the sa
 | **Project knowledge base** | Source-linked research reports in `docs/research/`, split into sections, indexed by meaning and used to answer questions. Each version is identified by a SHA-256 fingerprint. |
 | **Model** | A fine-tuned Llama 3.2 served through an OpenAI-compatible client. It runs locally on Ollama, or on a hosted endpoint when you opt in. |
 | **Research OS** | A `no_std` Rust x86_64 kernel tested in QEMU (E1000 networking, cooperative scheduling, a ring-3 ELF64 loader, block storage), plus an Alpine-based Linux image. |
-| **Neural → visual prototype** | `neurovisual/` is an SDK for EEG signal capture (BrainFlow/LSL, or simulated sensors), encrypted session datasets and image-generation research, based on a published survey of the field. |
+| **Neural → visual prototype** | `neurovisual/` is an SDK for EEG signal capture (BrainFlow/LSL, or simulated sensors), encrypted session datasets and image-generation research, based on a published survey of the field. It is a simulation: EEG band power is a signal measurement, not a thought or an image. |
+| **Agent network (TwinOS)** | A digital twin works as one agent among coding, terminal, MicroPython and GPU agents, over Ed25519-signed U-A2A messages. Only peers whose keys the owner pins can send tasks, and consequential work always waits for the owner's approval. |
+| **Cancer genomics tooling** | Public cancer-genomics datasets with their licence and access tier, before/after variant comparison, and candidate Cas9 guides. Research tooling that computes candidates for a laboratory, never a treatment, and not medical advice. |
+| **Model versions** | Every version of the model is recorded with its SHA-256, the commit it was built from, its training and its scores. One command installs a released version into Ollama. |
 | **Integrity** | Tamper-evident audit logs and an integrity report. Every release ships a code manifest (SHA-256 of every file under one fingerprint) that can be recorded on the chain. |
 
 ## Design principles
@@ -38,12 +41,13 @@ OS kernel, a Linux image and a fine-tuned language model are developed in the sa
 - **Stable, versioned APIs.** JSON Schemas for the node, app, shell, model, sync, integrity and pipeline-report
   APIs are contract-tested. v1 only grows; breaking changes get a new version.
 - **Honest limits.** [KNOWN_GAPS.md](https://github.com/DNA-Blockchain/Helloworld/blob/master/KNOWN_GAPS.md)
-  lists what the system does not do. For example, the ledger's balances are a local score, not a currency, and
-  the CRISPR guide scorer is a GC-content heuristic, not a clinical model.
+  lists what the system does not do. For example, the ledger's balances are a local score, not a currency; the
+  CRISPR guide tooling computes candidates for a laboratory, not treatments; and no part of the project
+  diagnoses or treats disease.
 
 ## Quality
 
-- 96 test modules with 824+ test functions run on every pull request (`python -m pytest tests/ -q`).
+- 99 test modules with 880+ test functions run on every pull request (`python -m pytest tests/ -q`).
 - The kernel is checked with `cargo fmt`, `cargo check --locked` and its own check runner, and runs only in QEMU.
 - The tag of every release matches `VERSION`, and the release carries its code manifest.
 
